@@ -8,11 +8,11 @@ final class AppViewModel {
 
   // MARK: Lifecycle
 
-  init(linkNavigator: SingleLinkNavigator) {
+  init(linkNavigator: TabLinkNavigator) {
     self.linkNavigator = linkNavigator
   }
 
   // MARK: Internal
 
-  let linkNavigator: SingleLinkNavigator
+  let linkNavigator: TabLinkNavigator
 }

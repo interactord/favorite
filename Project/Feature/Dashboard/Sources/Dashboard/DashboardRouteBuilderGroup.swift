@@ -10,6 +10,9 @@ public struct DashboardRouteBuilderGroup<RootNavigator: RootNavigatorType> {
 extension DashboardRouteBuilderGroup {
   public static var release: [RouteBuilderOf<RootNavigator>] {
     [
+      RepoRouteBuilder.generate(),
+      UserRouteBuilder.generate(),
+      LikeRouteBuilder.generate(),
     ]
   }
 }

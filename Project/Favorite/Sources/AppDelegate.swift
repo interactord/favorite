@@ -7,7 +7,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   let container: AppContainer = .build()
 
   var dependency: AppSideEffect { container.dependency }
-  var navigator: SingleLinkNavigator { container.navigator }
+  var navigator: TabLinkNavigator { container.navigator }
 
   func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
     return true

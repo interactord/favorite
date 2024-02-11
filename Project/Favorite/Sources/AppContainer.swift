@@ -8,7 +8,7 @@ final class AppContainer {
 
   // MARK: Lifecycle
 
-  private init(dependency: AppSideEffect, navigator: SingleLinkNavigator) {
+  private init(dependency: AppSideEffect, navigator: TabLinkNavigator) {
     self.dependency = dependency
     self.navigator = navigator
   }
@@ -16,7 +16,7 @@ final class AppContainer {
   // MARK: Internal
 
   let dependency: AppSideEffect
-  let navigator: SingleLinkNavigator
+  let navigator: TabLinkNavigator
 }
 
 extension AppContainer {

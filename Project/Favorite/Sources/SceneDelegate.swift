@@ -40,7 +40,7 @@ extension UIWindowScene {
     return window
   }
 
-  fileprivate func buildForKeyWindow(linkNavigator: SingleLinkNavigator) -> UIWindow {
+  fileprivate func buildForKeyWindow(linkNavigator: TabLinkNavigator) -> UIWindow {
     let window = UIWindow(windowScene: self)
     let rootView = AppMain(viewModel: .init(linkNavigator: linkNavigator))
     window.rootViewController = UIHostingController(rootView: rootView)

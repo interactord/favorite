@@ -3,9 +3,10 @@ import Domain
 import Foundation
 import LinkNavigator
 import Platform
+import Dashboard
 
 // MARK: - AppSideEffect
 
-struct AppSideEffect: DependencyType {
+struct AppSideEffect: DependencyType, DashboardEnvironmentUsable {
   let toastViewModel: ToastViewModel
 }
