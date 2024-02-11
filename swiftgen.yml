@@ -1,0 +1,10 @@
+xcassets:
+  - inputs: >-
+      Project/Core/DesignSystem/Sources/DesignSystem/Resources/Assets.xcassets
+    outputs:
+      - templateName: swift5
+        params:
+          forceProvidesNamespaces: true
+        output: >-
+          Project/Core/DesignSystem/Sources/DesignSystem/Resources/XCAssets+Generated.swift
+          
