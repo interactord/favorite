@@ -18,6 +18,9 @@ let package = Package(
     .package(
       url: "https://github.com/CombineCommunity/CombineExt.git",
       .upToNextMajor(from: "1.8.1")),
+    .package(
+      url: "https://github.com/apple/swift-log.git",
+      .upToNextMajor(from: "1.5.3")),
   ],
   targets: [
     .target(
@@ -25,6 +28,7 @@ let package = Package(
       dependencies: [
         "Domain",
         "CombineExt",
+        .product(name: "Logging", package: "swift-log"),
       ],
       resources: [
         .copy("Resources/Mock/dummy.json"),
