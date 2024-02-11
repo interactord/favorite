@@ -1,6 +1,7 @@
 import Architecture
 import Foundation
 import LinkNavigator
+import Platform
 
 // MARK: - AppContainer
 
@@ -22,7 +23,8 @@ final class AppContainer {
 extension AppContainer {
   class func build() -> AppContainer {
     let sideEffect = AppSideEffect(
-      toastViewModel: .init())
+      toastViewModel: .init(),
+      githubSearchUseCase: GithubSearchUseCasePlatform())
 
     return .init(
       dependency: sideEffect,

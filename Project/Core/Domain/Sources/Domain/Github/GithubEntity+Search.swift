@@ -3,7 +3,7 @@ extension GithubEntity {
 }
 
 extension GithubEntity.Search {
-  public struct Request: Equatable, Codable {
+  public struct Request: Equatable, Codable, Sendable {
     public let query: String
     public let page: Int
 
@@ -11,9 +11,14 @@ extension GithubEntity.Search {
       self.query = query
       self.page = page
     }
-  }	
 
-  public struct Response: Equatable, Codable {
+    enum CodingKeys: String, CodingKey {
+      case query = "q"
+      case page
+    }
+  }
+
+  public struct Response: Equatable, Codable, Sendable {
     public let totalCount: Int
     public let itemList: [Item]
 
@@ -23,7 +28,7 @@ extension GithubEntity.Search {
     }
   }
 
-  public struct Item: Equatable, Codable, Identifiable {
+  public struct Item: Equatable, Codable, Identifiable, Sendable {
     public let id: Int
     public let fullName: String
     public let owner: Owner
@@ -35,7 +40,7 @@ extension GithubEntity.Search {
     }
   }
 
-  public struct Owner: Equatable, Codable {
+  public struct Owner: Equatable, Codable, Sendable {
     public let id: Int
     public let avatarURL: String
 

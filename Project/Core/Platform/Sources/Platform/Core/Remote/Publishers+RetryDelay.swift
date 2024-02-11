@@ -39,7 +39,7 @@ extension Publishers {
     public let delay: TimingFunction
     public let scheduler: S
 
-    public func receive<S: Subscriber>(subscriber: S) where Upstream.Failure == S.Failure, Upstream.Output == S.Input {
+    public func receive<T: Subscriber>(subscriber: T) where Upstream.Failure == T.Failure, Upstream.Output == T.Input {
       upstream.catch { e -> AnyPublisher<Output, Failure> in
         guard retries < max else { return Fail(error: e).eraseToAnyPublisher() }
         return Fail(error: e)
