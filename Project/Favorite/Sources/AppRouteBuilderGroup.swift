@@ -1,7 +1,7 @@
 import Architecture
+import Dashboard
 import Foundation
 import LinkNavigator
-import Dashboard
 
 struct AppRouteBuilderGroup<RootNavigator: RootNavigatorType> {
 

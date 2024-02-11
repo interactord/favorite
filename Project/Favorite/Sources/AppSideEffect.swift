@@ -1,9 +1,9 @@
 import Architecture
+import Dashboard
 import Domain
 import Foundation
 import LinkNavigator
 import Platform
-import Dashboard
 
 // MARK: - AppSideEffect
 

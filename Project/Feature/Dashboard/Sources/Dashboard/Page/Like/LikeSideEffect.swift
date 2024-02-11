@@ -1,6 +1,6 @@
 import Architecture
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 struct LikeSideEffect {
   let useCase: DashboardEnvironmentUsable

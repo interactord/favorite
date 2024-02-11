@@ -4,8 +4,8 @@ import Foundation
 
 @Reducer
 struct LikeStore {
-  private let pageID: String
-  private let sideEffect: LikeSideEffect
+
+  // MARK: Lifecycle
 
   init(
     pageID: String = UUID().uuidString,
@@ -14,6 +14,8 @@ struct LikeStore {
     self.pageID = pageID
     self.sideEffect = sideEffect
   }
+
+  // MARK: Internal
 
   @ObservableState
   struct State: Equatable, Identifiable {
@@ -29,21 +31,26 @@ struct LikeStore {
     case teardown
   }
 
+  enum CancelID: Equatable, CaseIterable {
+    case teardown
+  }
+
   var body: some Reducer<State, Action> {
     BindingReducer()
-    Reduce { state, action in
+    Reduce { _, action in
       switch action {
       case .binding:
-        return .none
+        .none
       case .teardown:
-        return .concatenate(
-          CancelID.allCases.map { .cancel(pageID: pageID, id: $0) }
-        )
+        .concatenate(
+          CancelID.allCases.map { .cancel(pageID: pageID, id: $0) })
       }
     }
   }
 
-  enum CancelID: Equatable, CaseIterable {
-    case teardown
-  }
+  // MARK: Private
+
+  private let pageID: String
+  private let sideEffect: LikeSideEffect
+
 }

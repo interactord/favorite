@@ -2,7 +2,7 @@ import Domain
 import Foundation
 import Logging
 
-private let logging = Logging.Logger(label: "com.myCompany.authenticationpreviews.preview")
+private let logging = Logging.Logger(label: "com.myCompany.favorite.preview")
 
 // MARK: - Logger
 
@@ -20,7 +20,7 @@ public struct Logger: Equatable {
   }
 
   public static func error(_ error: CompositeErrorRepository) {
-    logging.error(.init(stringLiteral: error.message))
+    logging.error(.init(stringLiteral: error.displayMessage))
   }
 }
 

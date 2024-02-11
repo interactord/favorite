@@ -10,7 +10,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   var navigator: TabLinkNavigator { container.navigator }
 
   func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-    return true
+    true
   }
 
   func application(
