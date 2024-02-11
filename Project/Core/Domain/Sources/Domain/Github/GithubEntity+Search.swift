@@ -31,11 +31,23 @@ extension GithubEntity.Search {
   public struct Item: Equatable, Codable, Identifiable, Sendable {
     public let id: Int
     public let fullName: String
+    public let desc: String?
+    public let starCount: Int
+    public let watcherCount: Int
+    public let forkCount: Int
+    public let topicList: [String]
+    public let lastUpdate: String
     public let owner: Owner
 
     private enum CodingKeys: String, CodingKey {
       case id
       case fullName = "full_name"
+      case desc = "description"
+      case starCount = "stargazers_count"
+      case watcherCount = "watchers_count"
+      case forkCount = "forks_count"
+      case topicList = "topics"
+      case lastUpdate = "updated_at"
       case owner
     }
   }

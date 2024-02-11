@@ -11,6 +11,7 @@ public enum CompositeErrorRepository: Error {
   case networkUnknown
   case networkNotFound
   case other(Error)
+  case remoteError(RemoteError)
   case userCancelled
   case stopSpeech
   case webSocketDisconnect
@@ -24,6 +25,8 @@ public enum CompositeErrorRepository: Error {
     case .userCancelled:
       "User Canceled"
     case .stopSpeech: ""
+    case .remoteError(let error):
+      error.message
     default:
       localizedDescription
     }
@@ -65,4 +68,8 @@ extension Error {
     else { return .other(self) }
     return err
   }
+}
+
+public struct RemoteError: Codable, Equatable {
+  public let message: String
 }

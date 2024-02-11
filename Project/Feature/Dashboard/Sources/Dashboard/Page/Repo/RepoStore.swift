@@ -52,16 +52,25 @@ struct RepoStore {
         return .none
 
       case .search(let query):
+        guard !query.isEmpty else {
+          state.itemList = []
+          return .none
+        }
         let page = Int(state.itemList.count / 30) + 1
         return sideEffect.search(.init(query: query, page: page))
           .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
 
       case .fetchSearchItem(let result):
-        print(result)
         state.fetchSearchItem.isLoading = false
+        guard !state.query.isEmpty else {
+          state.itemList = []
+          return .none
+        }
+        state.itemList = []
         switch result {
         case .success(let item):
           state.fetchSearchItem.value = item
+          state.itemList = state.itemList + item.itemList
           return .none
         case .failure(let error):
           return .run { await $0(.throwError(error))}
