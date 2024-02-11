@@ -22,9 +22,10 @@ struct RepoStore {
   @ObservableState
   struct State: Equatable, Identifiable {
     let id: UUID
+    let perPage = 40
     var query: String = "swift"
     var itemList: [GithubEntity.Search.Item] = []
-    var fetchSearchItem: FetchState.Data<GithubEntity.Search.Response?> = .init(isLoading: false, value: .none)
+    var fetchSearchItem: FetchState.Data<GithubEntity.Search.Composite?> = .init(isLoading: false, value: .none)
 
     init(id: UUID = UUID()) {
       self.id = id
@@ -34,7 +35,7 @@ struct RepoStore {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case search(String)
-    case fetchSearchItem(Result<GithubEntity.Search.Response, CompositeErrorRepository>)
+    case fetchSearchItem(Result<GithubEntity.Search.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
   }
@@ -56,8 +57,15 @@ struct RepoStore {
           state.itemList = []
           return .none
         }
-        let page = Int(state.itemList.count / 30) + 1
-        return sideEffect.search(.init(query: query, page: page))
+
+        if state.query != state.fetchSearchItem.value?.request.query { state.itemList = [] }
+        if let totalCount = state.fetchSearchItem.value?.response.totalCount, totalCount < state.itemList.count {
+          return .none
+        }
+
+        let page = Int(state.itemList.count / state.perPage) + 1
+        state.fetchSearchItem.isLoading = true
+        return sideEffect.search(.init(query: query, page: page, perPage: state.perPage))
           .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
 
       case .fetchSearchItem(let result):
@@ -66,11 +74,13 @@ struct RepoStore {
           state.itemList = []
           return .none
         }
-        state.itemList = []
         switch result {
         case .success(let item):
           state.fetchSearchItem.value = item
-          state.itemList = state.itemList + item.itemList
+          state.itemList = state.itemList.merge(item.response.itemList)
+          if state.itemList.isEmpty {
+            sideEffect.useCase.toastViewModel.send(message: "검색결과가 없습니다")
+          }
           return .none
         case .failure(let error):
           return .run { await $0(.throwError(error))}
@@ -92,4 +102,15 @@ struct RepoStore {
   private let pageID: String
   private let sideEffect: RepoSideEffect
 
+}
+
+extension [GithubEntity.Search.Item] {
+  fileprivate func merge(_ target: Self) -> Self {
+    let new = target.reduce(self) { curr, next in
+      guard !self.contains(where: { $0.id == next.id }) else { return curr }
+      return curr + [next]
+    }
+
+    return Array(new)
+  }
 }

@@ -25,10 +25,16 @@ extension RepoPage: View {
         })
         ScrollView {
           LazyVStack(spacing: .zero, content: {
-            ForEach(store.itemList, id: \.id) {
+            ForEach(store.itemList, id: \.id) { item in
               RepositoryItemComponent(
-                action: { print($0) },
-                viewState: .init(item: $0))
+                action: { _ in print(item) },
+                viewState: .init(item: item))
+              .onAppear {
+                guard let last = store.itemList.last, last.id == item.id else { return }
+                guard !store.fetchSearchItem.isLoading else { return }
+                store.send(.search(store.query))
+
+              }
             }
           })
         }

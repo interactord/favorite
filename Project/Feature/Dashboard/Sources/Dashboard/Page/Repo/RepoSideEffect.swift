@@ -26,6 +26,11 @@ extension RepoSideEffect {
       .publisher {
         useCase.githubSearchUseCase.search(item)
           .receive(on: main)
+          .map {
+            GithubEntity.Search.Composite(
+              request: item,
+              response: $0)
+          }
           .mapToResult()
           .map(RepoStore.Action.fetchSearchItem)
       }
