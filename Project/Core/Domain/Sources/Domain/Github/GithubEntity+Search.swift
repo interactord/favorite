@@ -46,6 +46,7 @@ extension GithubEntity.Search {
     public let topicList: [String]
     public let lastUpdate: String
     public let owner: Owner
+    public let htmlURL: String?
 
     // MARK: Private
 
@@ -59,6 +60,7 @@ extension GithubEntity.Search {
       case topicList = "topics"
       case lastUpdate = "updated_at"
       case owner
+      case htmlURL = "html_url"
     }
   }
 
