@@ -22,19 +22,22 @@ extension AppMain: View {
           tabItem: .init(
             title: "Repository",
             image: .init(systemName: "shippingbox.fill"), tag: .zero),
-          linkItem: .init(path: Link.Dashboard.Path.repo.rawValue)),
+          linkItem: .init(path: Link.Dashboard.Path.repo.rawValue),
+          prefersLargeTitles: true),
         .init(
           tag: 1,
           tabItem: .init(
             title: "User",
             image: .init(systemName: "person.3.fill"), tag: 1),
-          linkItem: .init(path: Link.Dashboard.Path.user.rawValue)),
+          linkItem: .init(path: Link.Dashboard.Path.user.rawValue),
+          prefersLargeTitles: true),
         .init(
           tag: 2,
           tabItem: .init(
             title: "Like",
             image: .init(systemName: "heart.rectangle"), tag: 2),
-          linkItem: .init(path: Link.Dashboard.Path.like.rawValue)),
+          linkItem: .init(path: Link.Dashboard.Path.like.rawValue),
+          prefersLargeTitles: true),
       ])
       .ignoresSafeArea()
   }
