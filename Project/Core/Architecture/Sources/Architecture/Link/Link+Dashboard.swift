@@ -13,5 +13,6 @@ extension Link.Dashboard {
     case repo
     case user
     case like
+    case shareWeb
   }
 }

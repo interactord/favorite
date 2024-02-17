@@ -35,6 +35,7 @@ struct RepoStore {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case search(String)
+    case routeToDetail(GithubEntity.Search.Item)
     case fetchSearchItem(Result<GithubEntity.Search.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
@@ -67,6 +68,10 @@ struct RepoStore {
         state.fetchSearchItem.isLoading = true
         return sideEffect.search(.init(query: query, page: page, perPage: state.perPage))
           .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
+
+      case .routeToDetail(let item):
+        sideEffect.routeToDetail(item)
+        return .none
 
       case .fetchSearchItem(let result):
         state.fetchSearchItem.isLoading = false

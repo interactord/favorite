@@ -27,7 +27,7 @@ extension RepoPage: View {
           LazyVStack(spacing: .zero, content: {
             ForEach(store.itemList, id: \.id) { item in
               RepositoryItemComponent(
-                action: { _ in print(item) },
+                action: { store.send(.routeToDetail($0)) },
                 viewState: .init(item: item))
               .onAppear {
                 guard let last = store.itemList.last, last.id == item.id else { return }

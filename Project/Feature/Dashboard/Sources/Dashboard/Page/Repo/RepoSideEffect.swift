@@ -36,4 +36,14 @@ extension RepoSideEffect {
       }
     }
   }
+
+  var routeToDetail: (GithubEntity.Search.Item) -> Void {
+    { item in
+      navigator.next(
+        linkItem: .init(
+          path: Link.Dashboard.Path.shareWeb.rawValue,
+          items: item),
+        isAnimated: true)
+    }
+  }
 }

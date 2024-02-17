@@ -13,6 +13,7 @@ extension DashboardRouteBuilderGroup {
       RepoRouteBuilder.generate(),
       UserRouteBuilder.generate(),
       LikeRouteBuilder.generate(),
+      ShareWebRouteBuilder.generate(),
     ]
   }
 }
