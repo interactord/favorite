@@ -23,7 +23,7 @@ let package = Package(
       .upToNextMajor(from: "1.2.1")),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
-      .upToNextMajor(from: "1.7.3")),
+      .upToNextMajor(from: "1.8.0")),
     .package(
       url: "https://github.com/apple/swift-log.git",
       .upToNextMajor(from: "1.5.3")),
