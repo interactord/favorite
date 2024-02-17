@@ -1,11 +1,13 @@
 import ComposableArchitecture
 import DesignSystem
 import SwiftUI
+import Functor
 
 // MARK: - RepoPage
 
 struct RepoPage {
   @Bindable var store: StoreOf<RepoStore>
+  @State var throttleEvent: ThrottleEvent = .init(value: "", delaySeconds: 1.5)
 }
 
 extension RepoPage {
@@ -18,33 +20,35 @@ extension RepoPage {
 
 extension RepoPage: View {
   var body: some View {
-    NavigationStack {
-      VStack {
-        SearchBar(viewState: searchViewState, throttleAction: {
-          store.send(.search(store.query))
-        })
-        ScrollView {
-          LazyVStack(spacing: .zero, content: {
-            ForEach(store.itemList, id: \.id) { item in
-              RepositoryItemComponent(
-                action: { store.send(.routeToDetail($0)) },
-                viewState: .init(item: item))
-              .onAppear {
-                guard let last = store.itemList.last, last.id == item.id else { return }
-                guard !store.fetchSearchItem.isLoading else { return }
-                store.send(.search(store.query))
-
-              }
-            }
-          })
+    ScrollView {
+      LazyVStack(spacing: .zero, content: {
+        ForEach(store.itemList, id: \.id) { item in
+          RepositoryItemComponent(
+            action: { store.send(.routeToDetail($0)) },
+            viewState: .init(item: item))
+          .onAppear {
+            guard let last = store.itemList.last, last.id == item.id else { return }
+            guard !store.fetchSearchItem.isLoading else { return }
+            store.send(.search(store.query))
+          }
         }
-      }
-      .scrollDismissesKeyboard(.immediately)
+      })
     }
-    .navigationBarTitleDisplayMode(.inline)
+    .scrollDismissesKeyboard(.immediately)
+    .navigationBarTitleDisplayMode(.large)
     .navigationTitle("Repository")
+    .searchable(text: $store.query, placement: .automatic)
+    .onChange(of: store.query) { _, new in
+      throttleEvent.update(value: new)
+    }
     .onAppear {
-      store.send(.search(store.query))
+      throttleEvent.apply { _ in
+        store.send(.search(store.query))
+      }
+    }
+    .onDisappear {
+      throttleEvent.reset()
+      store.send(.teardown)
     }
   }
 }
