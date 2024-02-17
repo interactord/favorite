@@ -1,6 +1,6 @@
 import ComposableArchitecture
-import Domain
 import Dispatch
+import Domain
 import Foundation
 
 @Reducer

@@ -1,6 +1,8 @@
 import Combine
 import Domain
 
+// MARK: - GithubSearchUseCasePlatform
+
 public struct GithubSearchUseCasePlatform {
   let baseURL: String
 
@@ -9,15 +11,17 @@ public struct GithubSearchUseCasePlatform {
   }
 }
 
+// MARK: GithubSearchUseCase
+
 extension GithubSearchUseCasePlatform: GithubSearchUseCase {
   public var search: (GithubEntity.Search.Request) -> AnyPublisher<GithubEntity.Search.Response, CompositeErrorRepository> {
     {
       Endpoint(
         baseURL: baseURL,
-        pathList: [ "search", "repositories" ],
+        pathList: ["search", "repositories"],
         httpMethod: .get,
         content: .queryItemPath($0))
-      .fetch(isDebug: true)
+        .fetch(isDebug: true)
     }
   }
 }

@@ -1,5 +1,7 @@
+// MARK: - GithubEntity.Search
+
 extension GithubEntity {
-  public enum Search {}
+  public enum Search { }
 }
 
 extension GithubEntity.Search {
@@ -32,6 +34,9 @@ extension GithubEntity.Search {
   }
 
   public struct Item: Equatable, Codable, Identifiable, Sendable {
+
+    // MARK: Public
+
     public let id: Int
     public let fullName: String
     public let desc: String?
@@ -41,6 +46,8 @@ extension GithubEntity.Search {
     public let topicList: [String]
     public let lastUpdate: String
     public let owner: Owner
+
+    // MARK: Private
 
     private enum CodingKeys: String, CodingKey {
       case id
@@ -65,6 +72,8 @@ extension GithubEntity.Search {
     }
   }
 }
+
+// MARK: - GithubEntity.Search.Composite
 
 extension GithubEntity.Search {
   public struct Composite: Equatable, Sendable {

@@ -84,8 +84,7 @@ private final class IsolateImageCoderManager {
 
   // MARK: Lifecycle
 
-  private init() {
-  }
+  private init() { }
 
   // MARK: Internal
 

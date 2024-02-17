@@ -1,6 +1,8 @@
-import SwiftUI
-import Domain
 import DesignSystem
+import Domain
+import SwiftUI
+
+// MARK: - RepoPage.RepositoryItemComponent
 
 extension RepoPage {
   struct RepositoryItemComponent {
@@ -13,11 +15,12 @@ extension RepoPage.RepositoryItemComponent {
   var isEmptyRankCount: Bool {
     (
       viewState.item.starCount
-      + viewState.item.forkCount
-      + viewState.item.watcherCount
-    ) == .zero
+        + viewState.item.forkCount
+        + viewState.item.watcherCount) == .zero
   }
 }
+
+// MARK: - RepoPage.RepositoryItemComponent + View
 
 extension RepoPage.RepositoryItemComponent: View {
   var body: some View {
@@ -28,8 +31,8 @@ extension RepoPage.RepositoryItemComponent: View {
           Rectangle()
             .fill(DesignSystemColor.palette(.gray(.lv100)).color)
         })
-      .frame(width: 30, height: 30)
-      .clipShape(Circle())
+        .frame(width: 30, height: 30)
+        .clipShape(Circle())
 
       VStack(alignment: .leading, spacing: 4) {
         Text(viewState.item.fullName)
@@ -65,7 +68,7 @@ extension RepoPage.RepositoryItemComponent: View {
                   .font(.system(size: 8))
               }
             }
-            
+
             if viewState.item.forkCount > .zero {
               HStack(spacing: 4) {
                 Image(systemName: "tuningfork")
@@ -91,6 +94,8 @@ extension RepoPage.RepositoryItemComponent: View {
     }
   }
 }
+
+// MARK: - RepoPage.RepositoryItemComponent.ViewState
 
 extension RepoPage.RepositoryItemComponent {
   struct ViewState: Equatable {

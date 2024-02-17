@@ -15,8 +15,8 @@ let package = Package(
   ],
   dependencies: [
     .package(
-          url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
-          from: "2.2.3"),
+      url: "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      from: "2.2.3"),
   ],
   targets: [
     .target(

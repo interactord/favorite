@@ -1,8 +1,10 @@
 import Architecture
-import Domain
 import ComposableArchitecture
 import Dispatch
+import Domain
 import Foundation
+
+// MARK: - RepoStore
 
 @Reducer
 struct RepoStore {
@@ -23,7 +25,7 @@ struct RepoStore {
   struct State: Equatable, Identifiable {
     let id: UUID
     let perPage = 40
-    var query: String = "swift"
+    var query = "swift"
     var itemList: [GithubEntity.Search.Item] = []
     var fetchSearchItem: FetchState.Data<GithubEntity.Search.Composite?> = .init(isLoading: false, value: .none)
 
@@ -88,7 +90,7 @@ struct RepoStore {
           }
           return .none
         case .failure(let error):
-          return .run { await $0(.throwError(error))}
+          return .run { await $0(.throwError(error)) }
         }
 
       case .throwError(let error):

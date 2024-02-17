@@ -70,6 +70,8 @@ extension Error {
   }
 }
 
+// MARK: - RemoteError
+
 public struct RemoteError: Codable, Equatable {
   public let message: String
 }

@@ -16,7 +16,7 @@ extension ShareWebPage: View {
     }
     .toolbar {
       ToolbarItem(placement: .topBarTrailing) {
-        Button(action: {}) {
+        Button(action: { }) {
           Text("나오냐?")
         }
       }

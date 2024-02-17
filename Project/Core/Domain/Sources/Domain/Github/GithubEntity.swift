@@ -1,1 +1,1 @@
-public enum GithubEntity {}
+public enum GithubEntity { }

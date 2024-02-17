@@ -1,5 +1,7 @@
-import SwiftUI
 import Combine
+import SwiftUI
+
+// MARK: - SearchBar
 
 public struct SearchBar {
   @StateObject private var textBindingObserver: BindingObserver<String> = .init()
@@ -13,6 +15,8 @@ public struct SearchBar {
     self.throttleAction = throttleAction
   }
 }
+
+// MARK: SearchBar.ViewState
 
 extension SearchBar {
   public struct ViewState: Equatable {
@@ -28,6 +32,8 @@ extension SearchBar {
   }
 }
 
+// MARK: View
+
 extension SearchBar: View {
   public var body: some View {
     HStack {
@@ -38,7 +44,7 @@ extension SearchBar: View {
         .padding(.horizontal, 10)
         .focused($isFocus)
 
-      if isFocus && !viewState.text.wrappedValue.isEmpty {
+      if isFocus, !viewState.text.wrappedValue.isEmpty {
         Button(action: {
           isFocus = false
           viewState.text.wrappedValue = ""
@@ -51,7 +57,7 @@ extension SearchBar: View {
     .clipped()
     .padding(.trailing, 10)
     .animation(.default, value: viewState)
-    .onChange(of: viewState.text.wrappedValue) { old, new in textBindingObserver.update(value: new) }
+    .onChange(of: viewState.text.wrappedValue) { _, new in textBindingObserver.update(value: new) }
     .onReceive(textBindingObserver.$value.throttle(
       for: .milliseconds(1500),
       scheduler: RunLoop.main,
