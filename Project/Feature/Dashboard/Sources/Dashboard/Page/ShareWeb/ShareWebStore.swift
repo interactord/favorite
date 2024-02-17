@@ -21,11 +21,11 @@ struct ShareWebStore {
   @ObservableState
   struct State: Equatable, Identifiable {
     let id: UUID
-    let item: GithubEntity.Search.Item
+    let item: GithubEntity.Search.Repository.Item
 
     init(
       id: UUID = UUID(),
-      item: GithubEntity.Search.Item)
+      item: GithubEntity.Search.Repository.Item)
     {
       self.id = id
       self.item = item

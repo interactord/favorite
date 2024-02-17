@@ -30,6 +30,6 @@ extension ShareWebPage.WebContent: UIViewRepresentable {
 
 extension ShareWebPage.WebContent {
   struct ViewState: Equatable {
-    let item: GithubEntity.Search.Item
+    let item: GithubEntity.Search.Repository.Item
   }
 }

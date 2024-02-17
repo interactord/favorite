@@ -26,8 +26,8 @@ struct RepoStore {
     let id: UUID
     let perPage = 40
     var query = "swift"
-    var itemList: [GithubEntity.Search.Item] = []
-    var fetchSearchItem: FetchState.Data<GithubEntity.Search.Composite?> = .init(isLoading: false, value: .none)
+    var itemList: [GithubEntity.Search.Repository.Item] = []
+    var fetchSearchItem: FetchState.Data<GithubEntity.Search.Repository.Composite?> = .init(isLoading: false, value: .none)
 
     init(id: UUID = UUID()) {
       self.id = id
@@ -37,8 +37,8 @@ struct RepoStore {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case search(String)
-    case routeToDetail(GithubEntity.Search.Item)
-    case fetchSearchItem(Result<GithubEntity.Search.Composite, CompositeErrorRepository>)
+    case routeToDetail(GithubEntity.Search.Repository.Item)
+    case fetchSearchItem(Result<GithubEntity.Search.Repository.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
   }
@@ -111,7 +111,7 @@ struct RepoStore {
 
 }
 
-extension [GithubEntity.Search.Item] {
+extension [GithubEntity.Search.Repository.Item] {
   fileprivate func merge(_ target: Self) -> Self {
     let new = target.reduce(self) { curr, next in
       guard !self.contains(where: { $0.id == next.id }) else { return curr }

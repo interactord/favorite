@@ -14,11 +14,28 @@ public struct GithubSearchUseCasePlatform {
 // MARK: GithubSearchUseCase
 
 extension GithubSearchUseCasePlatform: GithubSearchUseCase {
-  public var search: (GithubEntity.Search.Request) -> AnyPublisher<GithubEntity.Search.Response, CompositeErrorRepository> {
+  public var searchRepository: (GithubEntity.Search.Repository.Request) -> AnyPublisher<
+    GithubEntity.Search.Repository.Response,
+    CompositeErrorRepository
+  > {
     {
       Endpoint(
         baseURL: baseURL,
         pathList: ["search", "repositories"],
+        httpMethod: .get,
+        content: .queryItemPath($0))
+        .fetch(isDebug: true)
+    }
+  }
+
+  public var searchUser: (GithubEntity.Search.User.Request) -> AnyPublisher<
+    GithubEntity.Search.User.Response,
+    CompositeErrorRepository
+  > {
+    {
+      Endpoint(
+        baseURL: baseURL,
+        pathList: ["search", "users"],
         httpMethod: .get,
         content: .queryItemPath($0))
         .fetch(isDebug: true)
