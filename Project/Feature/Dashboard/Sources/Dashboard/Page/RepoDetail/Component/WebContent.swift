@@ -3,21 +3,21 @@ import SwiftUI
 import UIKit
 import WebKit
 
-// MARK: - ShareWebPage.WebContent
+// MARK: - RepoDetailPage.WebContent
 
-extension ShareWebPage {
+extension RepoDetailPage {
   struct WebContent {
     let viewState: ViewState
   }
 }
 
-// MARK: - ShareWebPage.WebContent + UIViewRepresentable
+// MARK: - RepoDetailPage.WebContent + UIViewRepresentable
 
-extension ShareWebPage.WebContent: UIViewRepresentable {
+extension RepoDetailPage.WebContent: UIViewRepresentable {
   func makeUIView(context _: Context) -> WKWebView {
     let webView = WKWebView(frame: .zero, configuration: .init())
 
-    if let url = URL(string: viewState.item.htmlURL ?? "") {
+    if let url = URL(string: viewState.item.htmlURL) {
       webView.load(.init(url: url))
     }
     return webView
@@ -26,10 +26,10 @@ extension ShareWebPage.WebContent: UIViewRepresentable {
   func updateUIView(_: WKWebView, context _: Context) { }
 }
 
-// MARK: - ShareWebPage.WebContent.ViewState
+// MARK: - RepoDetailPage.WebContent.ViewState
 
-extension ShareWebPage.WebContent {
+extension RepoDetailPage.WebContent {
   struct ViewState: Equatable {
-    let item: GithubEntity.Search.Repository.Item
+    let item: GithubEntity.Detail.Repository.Response
   }
 }

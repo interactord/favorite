@@ -1,8 +1,9 @@
 import Architecture
+import Domain
 import ComposableArchitecture
 import Foundation
 
-struct ShareWebSideEffect {
+struct RepoDetailSideEffect {
   let useCase: DashboardEnvironmentUsable
   let main: AnySchedulerOf<DispatchQueue>
   let navigator: RootNavigatorType
@@ -15,5 +16,18 @@ struct ShareWebSideEffect {
     self.useCase = useCase
     self.main = main
     self.navigator = navigator
+  }
+}
+
+extension RepoDetailSideEffect {
+  var detail: (GithubEntity.Detail.Repository.Request) -> Effect<RepoDetailStore.Action> {
+    { item in
+        .publisher {
+          useCase.githubDetailUseCase.repository(item)
+            .receive(on: main)
+            .mapToResult()
+            .map(RepoDetailStore.Action.fetchDetailItem)
+        }
+    }
   }
 }

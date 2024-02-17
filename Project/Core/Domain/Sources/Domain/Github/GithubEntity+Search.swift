@@ -42,6 +42,7 @@ extension GithubEntity.Search.Repository {
 
     public let id: Int
     public let fullName: String
+    public let name: String
     public let desc: String?
     public let starCount: Int
     public let watcherCount: Int
@@ -56,6 +57,7 @@ extension GithubEntity.Search.Repository {
     private enum CodingKeys: String, CodingKey {
       case id
       case fullName = "full_name"
+      case name
       case desc = "description"
       case starCount = "stargazers_count"
       case watcherCount = "watchers_count"
@@ -70,10 +72,12 @@ extension GithubEntity.Search.Repository {
   public struct Owner: Equatable, Codable, Sendable {
     public let id: Int
     public let avatarURL: String
+    public let login: String
 
     private enum CodingKeys: String, CodingKey {
       case id
       case avatarURL = "avatar_url"
+      case login
     }
   }
 }

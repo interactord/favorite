@@ -11,9 +11,9 @@ extension Link {
 extension Link.Dashboard {
   public enum Path: String, Equatable {
     case repo
+    case repoDetail
     case user
     case userDetail
     case like
-    case shareWeb
   }
 }

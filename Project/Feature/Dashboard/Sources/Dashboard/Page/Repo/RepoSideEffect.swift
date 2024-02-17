@@ -43,9 +43,17 @@ extension RepoSideEffect {
     { item in
       navigator.next(
         linkItem: .init(
-          path: Link.Dashboard.Path.shareWeb.rawValue,
-          items: item),
+          path: Link.Dashboard.Path.repoDetail.rawValue,
+          items: item.serialized()),
         isAnimated: true)
     }
+  }
+}
+
+extension GithubEntity.Search.Repository.Item {
+  fileprivate func serialized() -> GithubEntity.Detail.Repository.Request {
+    .init(
+      ownerName: owner.login,
+      repositoryName: name)
   }
 }

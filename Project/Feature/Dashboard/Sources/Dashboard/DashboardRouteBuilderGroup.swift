@@ -11,10 +11,10 @@ extension DashboardRouteBuilderGroup {
   public static var release: [RouteBuilderOf<RootNavigator>] {
     [
       RepoRouteBuilder.generate(),
+      RepoDetailRouteBuilder.generate(),
       UserRouteBuilder.generate(),
       UserDetailRouteBuilder.generate(),
       LikeRouteBuilder.generate(),
-      ShareWebRouteBuilder.generate(),
     ]
   }
 }

@@ -1,6 +1,7 @@
 import Architecture
 import LinkNavigator
 import SwiftUI
+import URLEncodedForm
 
 // MARK: - AppMain
 
@@ -40,8 +41,5 @@ extension AppMain: View {
           prefersLargeTitles: true),
       ])
       .ignoresSafeArea()
-      .onAppear {
-        viewModel.linkNavigator.moveTab(targetPath: Link.Dashboard.Path.user.rawValue)
-      }
   }
 }
