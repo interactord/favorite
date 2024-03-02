@@ -11,6 +11,16 @@ struct UserDetailPage {
 
 extension UserDetailPage: View {
   var body: some View {
-    Text("UserDetailPage")
+    VStack {
+      Spacer()
+      Text("UserDetailPage")
+      Spacer()
+    }
+    .onAppear {
+      store.send(.getDetail(store.user))
+    }
+    .onDisappear {
+      store.send(.teardown)
+    }
   }
 }

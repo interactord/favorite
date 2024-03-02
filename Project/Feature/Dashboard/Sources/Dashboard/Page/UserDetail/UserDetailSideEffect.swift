@@ -1,4 +1,5 @@
 import Architecture
+import Domain
 import ComposableArchitecture
 import Foundation
 
@@ -19,5 +20,15 @@ struct UserDetailSideEffect {
 }
 
 extension UserDetailSideEffect {
-//  var user: (String) -> Effect<>?
+  var user: (GithubEntity.Detail.User.Request) -> Effect<UserDetailReducer.Action> {
+    { request in
+        .publisher {
+          useCase.githubDetailUseCase
+            .user(request)
+            .mapToResult()
+            .receive(on: main)
+            .map(UserDetailReducer.Action.fetchDetail)
+        }
+    }
+  }
 }

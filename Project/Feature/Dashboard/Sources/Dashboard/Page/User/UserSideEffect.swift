@@ -37,4 +37,15 @@ extension UserSideEffect {
       }
     }
   }
+
+  var routeToDetail: (GithubEntity.Search.User.Item) -> Void {
+    {
+      let model = GithubEntity.Detail.User.Request(ownerName: $0.loginName)
+      navigator.backOrNext(
+        linkItem: .init(
+          path: Link.Dashboard.Path.userDetail.rawValue,
+          items: model),
+        isAnimated: true)
+    }
+  }
 }

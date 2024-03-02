@@ -32,7 +32,7 @@ extension UserPage: View {
         ForEach(store.itemList, id: \.id) { item in
           UserItemComponent(
             viewState: .init(item: item),
-            action: { _ in })
+            action: { store.send(.routeToDetail($0)) })
             .onAppear {
               guard let last = store.itemList.last, last.id == item.id else { return }
               guard !store.fetchSearchItem.isLoading else { return }

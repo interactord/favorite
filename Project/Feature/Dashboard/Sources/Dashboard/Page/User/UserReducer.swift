@@ -34,6 +34,7 @@ struct UserReducer {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case search(String)
+    case routeToDetail(GithubEntity.Search.User.Item)
     case fetchSearchItem(Result<GithubEntity.Search.User.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
@@ -51,6 +52,10 @@ struct UserReducer {
       case .binding:
         return .none
 
+      case .teardown:
+        return .concatenate(
+          CancelID.allCases.map { .cancel(pageID: pageID, id: $0) })
+
       case .search(let query):
         guard !query.isEmpty else {
           state.itemList = []
@@ -66,6 +71,10 @@ struct UserReducer {
         state.fetchSearchItem.isLoading = true
         return sideEffect.searchUser(.init(query: query, page: page))
           .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
+
+      case .routeToDetail(let item):
+        sideEffect.routeToDetail(item)
+        return .none
 
       case .fetchSearchItem(let result):
         state.fetchSearchItem.isLoading = false
@@ -91,10 +100,6 @@ struct UserReducer {
         sideEffect.useCase.toastViewModel.send(errorMessage: error.displayMessage)
         Logger.error(.init(stringLiteral: error.displayMessage))
         return .none
-
-      case .teardown:
-        return .concatenate(
-          CancelID.allCases.map { .cancel(pageID: pageID, id: $0) })
       }
     }
   }
