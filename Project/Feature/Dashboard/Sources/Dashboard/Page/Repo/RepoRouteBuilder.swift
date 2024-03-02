@@ -10,9 +10,9 @@ struct RepoRouteBuilder<RootNavigator: RootNavigatorType> {
 
       return DebugWrappingController(matchPath: matchPath) {
         RepoPage(store: .init(
-          initialState: RepoStore.State(),
+          initialState: RepoReducer.State(),
           reducer: {
-            RepoStore(sideEffect: .init(
+            RepoReducer(sideEffect: .init(
               useCase: env,
               navigator: navigator))
           }))

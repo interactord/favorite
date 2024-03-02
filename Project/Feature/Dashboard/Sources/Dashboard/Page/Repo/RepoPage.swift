@@ -6,7 +6,7 @@ import SwiftUI
 // MARK: - RepoPage
 
 struct RepoPage {
-  @Bindable var store: StoreOf<RepoStore>
+  @Bindable var store: StoreOf<RepoReducer>
   @State var throttleEvent: ThrottleEvent = .init(value: "", delaySeconds: 1.5)
 }
 

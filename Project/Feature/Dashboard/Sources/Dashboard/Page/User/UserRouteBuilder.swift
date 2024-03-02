@@ -9,9 +9,9 @@ struct UserRouteBuilder<RootNavigator: RootNavigatorType> {
       guard let env: DashboardEnvironmentUsable = diContainer.resolve() else { return .none }
       return DebugWrappingController(matchPath: matchPath) {
         UserPage(store: .init(
-          initialState: UserStore.State(),
+          initialState: UserReducer.State(),
           reducer: {
-            UserStore(sideEffect: .init(
+            UserReducer(sideEffect: .init(
               useCase: env,
               navigator: navigator))
           }))

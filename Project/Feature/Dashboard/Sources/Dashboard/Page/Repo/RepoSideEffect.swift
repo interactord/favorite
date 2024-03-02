@@ -23,7 +23,7 @@ struct RepoSideEffect {
 }
 
 extension RepoSideEffect {
-  var search: (GithubEntity.Search.Repository.Request) -> Effect<RepoStore.Action> {
+  var search: (GithubEntity.Search.Repository.Request) -> Effect<RepoReducer.Action> {
     { item in
       .publisher {
         useCase.githubSearchUseCase.searchRepository(item)
@@ -34,7 +34,7 @@ extension RepoSideEffect {
               response: $0)
           }
           .mapToResult()
-          .map(RepoStore.Action.fetchSearchItem)
+          .map(RepoReducer.Action.fetchSearchItem)
       }
     }
   }

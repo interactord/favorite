@@ -22,7 +22,7 @@ struct UserSideEffect {
 }
 
 extension UserSideEffect {
-  var searchUser: (GithubEntity.Search.User.Request) -> Effect<UserStore.Action> {
+  var searchUser: (GithubEntity.Search.User.Request) -> Effect<UserReducer.Action> {
     { item in
       .publisher {
         useCase.githubSearchUseCase.searchUser(item)
@@ -33,7 +33,7 @@ extension UserSideEffect {
               response: $0)
           }
           .mapToResult()
-          .map(UserStore.Action.fetchSearchItem)
+          .map(UserReducer.Action.fetchSearchItem)
       }
     }
   }

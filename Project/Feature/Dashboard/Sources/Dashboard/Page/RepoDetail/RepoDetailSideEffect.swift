@@ -20,13 +20,13 @@ struct RepoDetailSideEffect {
 }
 
 extension RepoDetailSideEffect {
-  var detail: (GithubEntity.Detail.Repository.Request) -> Effect<RepoDetailStore.Action> {
+  var detail: (GithubEntity.Detail.Repository.Request) -> Effect<RepoDetailReducer.Action> {
     { item in
         .publisher {
           useCase.githubDetailUseCase.repository(item)
             .receive(on: main)
             .mapToResult()
-            .map(RepoDetailStore.Action.fetchDetailItem)
+            .map(RepoDetailReducer.Action.fetchDetailItem)
         }
     }
   }

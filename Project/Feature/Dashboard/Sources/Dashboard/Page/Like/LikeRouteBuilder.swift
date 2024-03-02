@@ -9,9 +9,9 @@ struct LikeRouteBuilder<RootNavigator: RootNavigatorType> {
       guard let env: DashboardEnvironmentUsable = diContainer.resolve() else { return .none }
       return DebugWrappingController(matchPath: matchPath) {
         LikePage(store: .init(
-          initialState: LikeStore.State(),
+          initialState: LikeReducer.State(),
           reducer: {
-            LikeStore(sideEffect: .init(
+            LikeReducer(sideEffect: .init(
               useCase: env,
               navigator: navigator))
           }))

@@ -17,3 +17,7 @@ struct UserDetailSideEffect {
     self.navigator = navigator
   }
 }
+
+extension UserDetailSideEffect {
+//  var user: (String) -> Effect<>?
+}

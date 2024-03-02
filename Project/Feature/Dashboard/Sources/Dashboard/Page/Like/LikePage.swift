@@ -4,7 +4,7 @@ import SwiftUI
 // MARK: - LikePage
 
 struct LikePage {
-  @Bindable var store: StoreOf<LikeStore>
+  @Bindable var store: StoreOf<LikeReducer>
 }
 
 // MARK: View

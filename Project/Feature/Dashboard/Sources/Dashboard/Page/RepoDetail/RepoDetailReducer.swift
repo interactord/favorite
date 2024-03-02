@@ -5,7 +5,7 @@ import Domain
 import Foundation
 
 @Reducer
-struct RepoDetailStore {
+struct RepoDetailReducer {
 
   // MARK: Lifecycle
 

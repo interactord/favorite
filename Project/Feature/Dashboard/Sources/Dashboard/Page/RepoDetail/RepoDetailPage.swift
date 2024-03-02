@@ -4,7 +4,7 @@ import SwiftUI
 // MARK: - RepoDetailPage
 
 struct RepoDetailPage {
-  @Bindable var store: StoreOf<RepoDetailStore>
+  @Bindable var store: StoreOf<RepoDetailReducer>
 }
 
 extension RepoDetailPage {

@@ -3,13 +3,13 @@ import Dispatch
 import Foundation
 
 @Reducer
-struct UserDetailStore {
+struct LikeReducer {
 
   // MARK: Lifecycle
 
   init(
     pageID: String = UUID().uuidString,
-    sideEffect: UserDetailSideEffect)
+    sideEffect: LikeSideEffect)
   {
     self.pageID = pageID
     self.sideEffect = sideEffect
@@ -51,6 +51,6 @@ struct UserDetailStore {
   // MARK: Private
 
   private let pageID: String
-  private let sideEffect: UserDetailSideEffect
+  private let sideEffect: LikeSideEffect
 
 }

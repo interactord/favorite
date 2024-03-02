@@ -7,7 +7,7 @@ import SwiftUI
 // MARK: - UserPage
 
 struct UserPage {
-  @Bindable var store: StoreOf<UserStore>
+  @Bindable var store: StoreOf<UserReducer>
   @State var throttleEvent: ThrottleEvent = .init(value: "", delaySeconds: 1.5)
 }
 
