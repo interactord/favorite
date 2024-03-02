@@ -41,8 +41,8 @@ extension UserDetailPage: View {
       }
     }
     .onAppear {
-//      store.send(.getDetail(store.user))
-      store.send(.getMock)
+      store.send(.getDetail(store.user))
+//      store.send(.getMock)
     }
     .onDisappear {
       store.send(.teardown)

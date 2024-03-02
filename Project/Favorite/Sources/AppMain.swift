@@ -31,8 +31,7 @@ extension AppMain: View {
           tabItem: .init(
             title: "User",
             image: .init(systemName: "person.3.fill"), tag: 1),
-//          linkItem: .init(path: Link.Dashboard.Path.user.rawValue),
-          linkItem: .init(path: Link.Dashboard.Path.userDetail.rawValue),
+          linkItem: .init(path: Link.Dashboard.Path.user.rawValue),
           prefersLargeTitles: true),
         .init(
           tag: 2,
