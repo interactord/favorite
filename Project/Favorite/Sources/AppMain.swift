@@ -2,6 +2,7 @@ import Architecture
 import LinkNavigator
 import SwiftUI
 import URLEncodedForm
+import Domain
 
 // MARK: - AppMain
 
@@ -30,7 +31,8 @@ extension AppMain: View {
           tabItem: .init(
             title: "User",
             image: .init(systemName: "person.3.fill"), tag: 1),
-          linkItem: .init(path: Link.Dashboard.Path.user.rawValue),
+//          linkItem: .init(path: Link.Dashboard.Path.user.rawValue),
+          linkItem: .init(path: Link.Dashboard.Path.userDetail.rawValue),
           prefersLargeTitles: true),
         .init(
           tag: 2,
@@ -40,6 +42,10 @@ extension AppMain: View {
           linkItem: .init(path: Link.Dashboard.Path.like.rawValue),
           prefersLargeTitles: true),
       ])
+    .onAppear {
+      viewModel.linkNavigator
+        .moveTab(targetPath: Link.Dashboard.Path.userDetail.rawValue)
+    }
       .ignoresSafeArea()
   }
 }

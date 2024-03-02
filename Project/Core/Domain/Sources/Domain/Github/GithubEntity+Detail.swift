@@ -38,19 +38,28 @@ extension GithubEntity.Detail.User {
   }
 
   public struct Response: Equatable, Codable, Sendable {
-
+    public let login: String
+    public let name: String?
+    public let location: String?
     public let avatarURL: String
     public let htmlURL: String
     public let bio: String
+    public let publicRepoCount: Int
+    public let publicGistCount: Int
     public let followerListCount: Int
     public let followingListCount: Int
     public let createDate: String
     public let updateDate: String
 
     private enum CodingKeys: String, CodingKey {
+      case login = "login"
+      case name = "name"
+      case location = "location"
       case avatarURL = "avatar_url"
       case htmlURL = "html_url"
       case bio = "bio"
+      case publicRepoCount = "public_repos"
+      case publicGistCount = "public_gists"
       case followerListCount = "followers"
       case followingListCount = "following"
       case createDate = "created_at"
