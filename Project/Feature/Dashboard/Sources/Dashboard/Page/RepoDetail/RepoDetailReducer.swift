@@ -25,6 +25,7 @@ struct RepoDetailReducer {
     let item: GithubEntity.Detail.Repository.Request
 
     var fetchDetailItem: FetchState.Data<GithubEntity.Detail.Repository.Response?> = .init(isLoading: false, value: .none)
+    var fetchIsLike: FetchState.Data<Bool> = .init(isLoading: false, value: false)
 
     init(
       id: UUID = UUID(),
@@ -38,7 +39,10 @@ struct RepoDetailReducer {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case getDetail
+    case getIsLike(GithubEntity.Detail.Repository.Response?)
+    case updateIsLike(GithubEntity.Detail.Repository.Response)
     case fetchDetailItem(Result<GithubEntity.Detail.Repository.Response, CompositeErrorRepository>)
+    case fetchIsLike(Result<Bool, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
   }
@@ -46,6 +50,7 @@ struct RepoDetailReducer {
   enum CancelID: Equatable, CaseIterable {
     case teardown
     case requestDetail
+    case requestIsLike
   }
 
   var body: some Reducer<State, Action> {
@@ -63,11 +68,32 @@ struct RepoDetailReducer {
         return sideEffect.detail(state.item)
           .cancellable(pageID: pageID, id: CancelID.requestDetail, cancelInFlight: true)
 
+      case .getIsLike(let item):
+        guard let item else { return .none }
+        state.fetchIsLike.isLoading = true
+        return sideEffect.isLike(item)
+          .cancellable(pageID: pageID, id: CancelID.requestIsLike, cancelInFlight: true)
+
+      case .updateIsLike(let item):
+        state.fetchIsLike.isLoading = true
+        return sideEffect.updateIsLike(item)
+          .cancellable(pageID: pageID, id: CancelID.requestIsLike, cancelInFlight: true)
+
       case .fetchDetailItem(let result):
         state.fetchDetailItem.isLoading = false
         switch result {
         case .success(let item):
           state.fetchDetailItem.value = item
+          return .none
+        case .failure(let error):
+          return .run { await $0(.throwError(error)) }
+        }
+
+      case .fetchIsLike(let result):
+        state.fetchIsLike.isLoading = false
+        switch result {
+        case .success(let item):
+          state.fetchIsLike.value = item
           return .none
         case .failure(let error):
           return .run { await $0(.throwError(error)) }

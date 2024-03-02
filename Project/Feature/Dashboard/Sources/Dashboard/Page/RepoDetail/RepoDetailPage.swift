@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import SwiftUI
+import Domain
 
 // MARK: - RepoDetailPage
 
@@ -33,6 +34,16 @@ extension RepoDetailPage: View {
     .navigationTitle(navigationTitle)
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
+      if let detailItem = store.fetchDetailItem.value {
+        ToolbarItem(placement: .topBarTrailing) {
+          LikeComponent(
+            viewState: .init(
+              isLike: store.fetchIsLike.value,
+              item: detailItem),
+            likeAction: { store.send(.updateIsLike($0)) })
+        }
+      }
+
       if let shareURL {
         ToolbarItem(placement: .topBarTrailing) {
           ShareLink(item: shareURL) {
@@ -41,6 +52,9 @@ extension RepoDetailPage: View {
         }
       }
     }
+    .onChange(of: store.fetchDetailItem.value) { _, new in
+      store.send(.getIsLike(new))
+    }
     .onAppear {
       store.send(.getDetail)
     }
@@ -48,5 +62,34 @@ extension RepoDetailPage: View {
       store.send(.teardown)
     }
 
+  }
+}
+
+extension RepoDetailPage {
+  struct LikeComponent {
+    let viewState: ViewState
+    let likeAction: (GithubEntity.Detail.Repository.Response) -> Void
+  }
+}
+
+extension RepoDetailPage.LikeComponent {
+  private var likeImage: Image {
+    Image(systemName: viewState.isLike ? "heart.fill" : "heart")
+  }
+}
+
+extension RepoDetailPage.LikeComponent: View {
+  var body: some View {
+    Button(action: { likeAction(viewState.item) }) {
+      likeImage
+        .resizable()
+    }
+  }
+}
+
+extension RepoDetailPage.LikeComponent {
+  struct ViewState: Equatable {
+    let isLike: Bool
+    let item: GithubEntity.Detail.Repository.Response
   }
 }

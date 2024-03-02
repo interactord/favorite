@@ -25,7 +25,8 @@ extension AppContainer {
     let sideEffect = AppSideEffect(
       toastViewModel: .init(),
       githubSearchUseCase: GithubSearchUseCasePlatform(),
-      githubDetailUseCase: GithubDetailUseCasePlatform())
+      githubDetailUseCase: GithubDetailUseCasePlatform(),
+      githubLikeUseCase: GithubLikeUseCasePlatform())
 
     return .init(
       dependency: sideEffect,

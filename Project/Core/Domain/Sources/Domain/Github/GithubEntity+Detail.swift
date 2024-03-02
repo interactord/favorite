@@ -18,12 +18,42 @@ extension GithubEntity.Detail.Repository {
   }
 
   public struct Response: Equatable, Codable, Sendable {
+    public let id: Int
     public let fullName: String
-    public let htmlURL: String
+    public let name: String
+    public let desc: String?
+    public let starCount: Int
+    public let watcherCount: Int
+    public let forkCount: Int
+    public let topicList: [String]
+    public let lastUpdate: String
+    public let owner: Owner
+    public let htmlURL: String?
 
     private enum CodingKeys: String, CodingKey {
+      case id
       case fullName = "full_name"
+      case name
+      case desc = "description"
+      case starCount = "stargazers_count"
+      case watcherCount = "watchers_count"
+      case forkCount = "forks_count"
+      case topicList = "topics"
+      case lastUpdate = "updated_at"
+      case owner
       case htmlURL = "html_url"
+    }
+
+    public struct Owner: Equatable, Codable, Sendable {
+      public let id: Int
+      public let avatarURL: String
+      public let login: String
+
+      private enum CodingKeys: String, CodingKey {
+        case id
+        case avatarURL = "avatar_url"
+        case login
+      }
     }
   }
 }
