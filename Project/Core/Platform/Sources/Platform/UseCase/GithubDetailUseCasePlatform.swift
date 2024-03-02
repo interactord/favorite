@@ -20,4 +20,15 @@ extension GithubDetailUseCasePlatform: GithubDetailUseCase {
         .fetch(isDebug: true)
     }
   }
+
+  public var user: (GithubEntity.Detail.User.Request) -> AnyPublisher<GithubEntity.Detail.User.Response, CompositeErrorRepository> {
+    { item in
+      Endpoint(
+        baseURL: baseURL,
+        pathList: ["users", item.ownerName],
+        httpMethod: .get,
+        content: .none)
+      .fetch()
+    }
+  }
 }
