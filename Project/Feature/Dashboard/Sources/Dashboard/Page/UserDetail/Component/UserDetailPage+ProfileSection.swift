@@ -1,7 +1,9 @@
-import Foundation
-import Domain
-import SwiftUI
 import DesignSystem
+import Domain
+import Foundation
+import SwiftUI
+
+// MARK: - UserDetailPage.ProfileSection
 
 extension UserDetailPage {
   struct ProfileSection {
@@ -9,8 +11,9 @@ extension UserDetailPage {
   }
 }
 
-extension UserDetailPage.ProfileSection {
-}
+extension UserDetailPage.ProfileSection { }
+
+// MARK: - UserDetailPage.ProfileSection + View
 
 extension UserDetailPage.ProfileSection: View {
   var body: some View {
@@ -44,14 +47,13 @@ extension UserDetailPage.ProfileSection: View {
 
       Text(viewState.item.bio)
     }
-
   }
 }
+
+// MARK: - UserDetailPage.ProfileSection.ViewState
 
 extension UserDetailPage.ProfileSection {
   struct ViewState: Equatable {
     let item: GithubEntity.Detail.User.Response
   }
 }
-
-

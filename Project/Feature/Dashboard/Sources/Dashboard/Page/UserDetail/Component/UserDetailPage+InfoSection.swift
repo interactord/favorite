@@ -1,6 +1,8 @@
-import Foundation
 import Domain
+import Foundation
 import SwiftUI
+
+// MARK: - UserDetailPage.InfoSection
 
 extension UserDetailPage {
   struct InfoSection {
@@ -8,8 +10,9 @@ extension UserDetailPage {
   }
 }
 
-extension UserDetailPage.InfoSection {
-}
+extension UserDetailPage.InfoSection { }
+
+// MARK: - UserDetailPage.InfoSection + View
 
 extension UserDetailPage.InfoSection: View {
   var body: some View {
@@ -20,30 +23,28 @@ extension UserDetailPage.InfoSection: View {
             iconName: "folder",
             title: "Public repos",
             count: viewState.item.publicRepoCount)
-          .background(.cyan)
+            .background(.cyan)
           Spacer(minLength: 16)
           IconTitle(
             iconName: "text.alignleft",
             title: "Public gists",
             count: viewState.item.publicGistCount)
-          .background(.red)
+            .background(.red)
         }
 
-        Button(action: {}) {
+        Button(action: { }) {
           Text("Github Profile")
             .foregroundStyle(.purple)
         }
         .background(
           RoundedRectangle(cornerRadius: 8)
-            .fill(.purple.opacity(0.8))
-        )
+            .fill(.purple.opacity(0.8)))
         .padding(8)
         .frame(maxWidth: .infinity)
       }
       .background(
         RoundedRectangle(cornerRadius: 8)
-          .fill(.black.opacity(0.8))
-      )
+          .fill(.black.opacity(0.8)))
 
       VStack(spacing: 8) {
         HStack(alignment: .top, spacing: 8) {
@@ -60,26 +61,24 @@ extension UserDetailPage.InfoSection: View {
             count: viewState.item.followingListCount)
         }
 
-        Button(action: {}) {
+        Button(action: { }) {
           Text("Github Profile")
             .foregroundStyle(.green)
         }
         .background(
           RoundedRectangle(cornerRadius: 8)
-            .fill(.green.opacity(0.8))
-        )
+            .fill(.green.opacity(0.8)))
         .padding(8)
         .frame(maxWidth: .infinity)
       }
       .background(
         RoundedRectangle(cornerRadius: 8)
-          .fill(.black.opacity(0.8))
-      )
-
-
+          .fill(.black.opacity(0.8)))
     }
   }
 }
+
+// MARK: - UserDetailPage.InfoSection.ViewState
 
 extension UserDetailPage.InfoSection {
   struct ViewState: Equatable {
@@ -87,7 +86,9 @@ extension UserDetailPage.InfoSection {
   }
 }
 
-fileprivate struct IconTitle: View {
+// MARK: - IconTitle
+
+private struct IconTitle: View {
   let iconName: String
   let title: String
   let count: Int
@@ -108,5 +109,3 @@ fileprivate struct IconTitle: View {
     }
   }
 }
-
-

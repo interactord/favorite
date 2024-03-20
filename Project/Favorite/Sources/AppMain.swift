@@ -1,8 +1,8 @@
 import Architecture
+import Domain
 import LinkNavigator
 import SwiftUI
 import URLEncodedForm
-import Domain
 
 // MARK: - AppMain
 
@@ -41,10 +41,10 @@ extension AppMain: View {
           linkItem: .init(path: Link.Dashboard.Path.like.rawValue),
           prefersLargeTitles: true),
       ])
-    .onAppear {
-      viewModel.linkNavigator
-        .moveTab(targetPath: Link.Dashboard.Path.userDetail.rawValue)
-    }
+      .onAppear {
+        viewModel.linkNavigator
+          .moveTab(targetPath: Link.Dashboard.Path.userDetail.rawValue)
+      }
       .ignoresSafeArea()
   }
 }

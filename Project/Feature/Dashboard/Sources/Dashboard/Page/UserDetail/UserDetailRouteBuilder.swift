@@ -1,7 +1,7 @@
 import Architecture
 import Domain
-import LinkNavigator
 import Foundation
+import LinkNavigator
 
 struct UserDetailRouteBuilder<RootNavigator: RootNavigatorType> {
   static func generate() -> RouteBuilderOf<RootNavigator> {

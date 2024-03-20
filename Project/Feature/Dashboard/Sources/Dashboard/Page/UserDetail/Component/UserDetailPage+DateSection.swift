@@ -1,6 +1,8 @@
-import Foundation
 import Domain
+import Foundation
 import SwiftUI
+
+// MARK: - UserDetailPage.DateSection
 
 extension UserDetailPage {
   struct DateSection {
@@ -18,6 +20,8 @@ extension UserDetailPage.DateSection {
   }
 }
 
+// MARK: - UserDetailPage.DateSection + View
+
 extension UserDetailPage.DateSection: View {
   var body: some View {
     VStack(spacing: 4) {
@@ -29,6 +33,8 @@ extension UserDetailPage.DateSection: View {
     }
   }
 }
+
+// MARK: - UserDetailPage.DateSection.ViewState
 
 extension UserDetailPage.DateSection {
   struct ViewState: Equatable {

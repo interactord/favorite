@@ -1,6 +1,6 @@
 import ComposableArchitecture
-import SwiftUI
 import Domain
+import SwiftUI
 
 // MARK: - RepoDetailPage
 
@@ -29,7 +29,6 @@ extension RepoDetailPage: View {
       } else {
         Text("로딩중...")
       }
-
     }
     .navigationTitle(navigationTitle)
     .navigationBarTitleDisplayMode(.inline)
@@ -61,9 +60,10 @@ extension RepoDetailPage: View {
     .onDisappear {
       store.send(.teardown)
     }
-
   }
 }
+
+// MARK: RepoDetailPage.LikeComponent
 
 extension RepoDetailPage {
   struct LikeComponent {
@@ -78,6 +78,8 @@ extension RepoDetailPage.LikeComponent {
   }
 }
 
+// MARK: - RepoDetailPage.LikeComponent + View
+
 extension RepoDetailPage.LikeComponent: View {
   var body: some View {
     Button(action: { likeAction(viewState.item) }) {
@@ -86,6 +88,8 @@ extension RepoDetailPage.LikeComponent: View {
     }
   }
 }
+
+// MARK: - RepoDetailPage.LikeComponent.ViewState
 
 extension RepoDetailPage.LikeComponent {
   struct ViewState: Equatable {

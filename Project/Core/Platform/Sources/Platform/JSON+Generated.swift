@@ -12,6 +12,30 @@ import Foundation
 enum Files {
   /// dummy.json
   static let dummyJson = File(name: "dummy", ext: "json", relativePath: "", mimeType: "application/json")
+  /// search_repositories_failure.json
+  static let searchRepositoriesFailureJson = File(
+    name: "search_repositories_failure",
+    ext: "json",
+    relativePath: "",
+    mimeType: "application/json")
+  /// search_repositories_success.json
+  static let searchRepositoriesSuccessJson = File(
+    name: "search_repositories_success",
+    ext: "json",
+    relativePath: "",
+    mimeType: "application/json")
+  /// search_users_failure.json
+  static let searchUsersFailureJson = File(
+    name: "search_users_failure",
+    ext: "json",
+    relativePath: "",
+    mimeType: "application/json")
+  /// search_users_success.json
+  static let searchUsersSuccessJson = File(
+    name: "search_users_success",
+    ext: "json",
+    relativePath: "",
+    mimeType: "application/json")
 }
 
 // MARK: - File

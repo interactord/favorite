@@ -1,6 +1,8 @@
 import Combine
 import Domain
 
+// MARK: - GithubDetailUseCasePlatform
+
 public struct GithubDetailUseCasePlatform {
   let baseURL: String
 
@@ -9,8 +11,13 @@ public struct GithubDetailUseCasePlatform {
   }
 }
 
+// MARK: GithubDetailUseCase
+
 extension GithubDetailUseCasePlatform: GithubDetailUseCase {
-  public var repository: (GithubEntity.Detail.Repository.Request) -> AnyPublisher<GithubEntity.Detail.Repository.Response, CompositeErrorRepository> {
+  public var repository: (GithubEntity.Detail.Repository.Request) -> AnyPublisher<
+    GithubEntity.Detail.Repository.Response,
+    CompositeErrorRepository
+  > {
     { item in
       Endpoint(
         baseURL: baseURL,
@@ -21,14 +28,17 @@ extension GithubDetailUseCasePlatform: GithubDetailUseCase {
     }
   }
 
-  public var user: (GithubEntity.Detail.User.Request) -> AnyPublisher<GithubEntity.Detail.User.Response, CompositeErrorRepository> {
+  public var user: (GithubEntity.Detail.User.Request) -> AnyPublisher<
+    GithubEntity.Detail.User.Response,
+    CompositeErrorRepository
+  > {
     { item in
       Endpoint(
         baseURL: baseURL,
         pathList: ["users", item.ownerName],
         httpMethod: .get,
         content: .none)
-      .fetch()
+        .fetch()
     }
   }
 }

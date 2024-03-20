@@ -11,9 +11,9 @@ struct StandardKeyArchiver<T: Codable> {
   init(defaultValue: T) {
     key = String(describing: T.self)
     self.defaultValue =
-    (try? KeyArchiver().load(name: key))
-    ?? (try? KeyArchiver().saved(model: defaultValue, name: key))
-    ?? defaultValue
+      (try? KeyArchiver().load(name: key))
+        ?? (try? KeyArchiver().saved(model: defaultValue, name: key))
+        ?? defaultValue
   }
 
   // MARK: Internal
@@ -23,7 +23,7 @@ struct StandardKeyArchiver<T: Codable> {
       do {
         return try KeyArchiver().load(name: key)
       } catch {
-        print("Error \(#function) ", error)
+//        print("Error \(#function) ", error)
         return defaultValue
       }
     }
@@ -32,7 +32,7 @@ struct StandardKeyArchiver<T: Codable> {
       do {
         try KeyArchiver().saved(model: newValue, name: key)
       } catch {
-        print("Error \(#function) ", error)
+//        print("Error \(#function) ", error)
       }
     }
   }

@@ -1,3 +1,5 @@
+// MARK: - GithubEntity.Detail
+
 extension GithubEntity {
   public enum Detail {
     public enum Repository { }
@@ -18,6 +20,21 @@ extension GithubEntity.Detail.Repository {
   }
 
   public struct Response: Equatable, Codable, Sendable {
+
+    // MARK: Public
+
+    public struct Owner: Equatable, Codable, Sendable {
+      public let id: Int
+      public let avatarURL: String
+      public let login: String
+
+      private enum CodingKeys: String, CodingKey {
+        case id
+        case avatarURL = "avatar_url"
+        case login
+      }
+    }
+
     public let id: Int
     public let fullName: String
     public let name: String
@@ -29,6 +46,8 @@ extension GithubEntity.Detail.Repository {
     public let lastUpdate: String
     public let owner: Owner
     public let htmlURL: String?
+
+    // MARK: Private
 
     private enum CodingKeys: String, CodingKey {
       case id
@@ -44,17 +63,6 @@ extension GithubEntity.Detail.Repository {
       case htmlURL = "html_url"
     }
 
-    public struct Owner: Equatable, Codable, Sendable {
-      public let id: Int
-      public let avatarURL: String
-      public let login: String
-
-      private enum CodingKeys: String, CodingKey {
-        case id
-        case avatarURL = "avatar_url"
-        case login
-      }
-    }
   }
 }
 
@@ -68,6 +76,9 @@ extension GithubEntity.Detail.User {
   }
 
   public struct Response: Equatable, Codable, Sendable {
+
+    // MARK: Public
+
     public let login: String
     public let name: String?
     public let location: String?
@@ -81,13 +92,15 @@ extension GithubEntity.Detail.User {
     public let createDate: String
     public let updateDate: String
 
+    // MARK: Private
+
     private enum CodingKeys: String, CodingKey {
-      case login = "login"
-      case name = "name"
-      case location = "location"
+      case login
+      case name
+      case location
       case avatarURL = "avatar_url"
       case htmlURL = "html_url"
-      case bio = "bio"
+      case bio
       case publicRepoCount = "public_repos"
       case publicGistCount = "public_gists"
       case followerListCount = "followers"
