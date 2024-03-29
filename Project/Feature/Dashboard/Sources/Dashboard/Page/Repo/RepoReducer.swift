@@ -7,11 +7,11 @@ import Foundation
 // MARK: - RepoReducer
 
 @Reducer
-struct RepoReducer {
+public struct RepoReducer {
 
   // MARK: Lifecycle
 
-  init(
+  public init(
     pageID: String = UUID().uuidString,
     sideEffect: RepoSideEffect)
   {
@@ -22,19 +22,20 @@ struct RepoReducer {
   // MARK: Internal
 
   @ObservableState
-  struct State: Equatable, Identifiable {
-    let id: UUID
-    let perPage = 40
-    var query = "swift"
-    var itemList: [GithubEntity.Search.Repository.Item] = []
-    var fetchSearchItem: FetchState.Data<GithubEntity.Search.Repository.Composite?> = .init(isLoading: false, value: .none)
+  public struct State: Equatable, Identifiable {
+    public let id: UUID
+    public let perPage = 40
 
-    init(id: UUID = UUID()) {
+    public var query = "swift"
+    public var itemList: [GithubEntity.Search.Repository.Item] = []
+    public var fetchSearchItem: FetchState.Data<GithubEntity.Search.Repository.Composite?> = .init(isLoading: false, value: .none)
+
+    public init(id: UUID = UUID()) {
       self.id = id
     }
   }
 
-  enum Action: BindableAction, Sendable {
+  public enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case search(String)
     case routeToDetail(GithubEntity.Search.Repository.Item)
@@ -48,7 +49,7 @@ struct RepoReducer {
     case requestSearch
   }
 
-  var body: some Reducer<State, Action> {
+  public var body: some Reducer<State, Action> {
     BindingReducer()
     Reduce { state, action in
       switch action {
