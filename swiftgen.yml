@@ -1,17 +1,17 @@
 xcassets:
   - inputs: >-
-      Project/Core/DesignSystem/Sources/DesignSystem/Resources/Assets.xcassets
+      Modules/Core/DesignSystem/Sources/DesignSystem/Resources/Assets.xcassets
     outputs:
       - templateName: swift5
         params:
           forceProvidesNamespaces: true
         output: >-
-          Project/Core/DesignSystem/Sources/DesignSystem/Resources/XCAssets+Generated.swift
+          Modules/Core/DesignSystem/Sources/DesignSystem/Resources/XCAssets+Generated.swift
 files:
-  - inputs: Project/Core/Platform/Sources/Platform/Resources/Mock
+  - inputs: Modules/Core/Platform/Sources/Platform/Resources/Mock
     filter: .+\.json$
     outputs:
       - templateName: structured-swift5
         params:
           forceProvidesNamespaces: true
-        output: Project/Core/Platform/Sources/Platform/JSON+Generated.swift
+        output: Modules/Core/Platform/Sources/Platform/JSON+Generated.swift

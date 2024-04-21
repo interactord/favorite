@@ -2,6 +2,8 @@ import Foundation
 import LinkNavigator
 import UIKit
 
+// MARK: - TabLinkNavigatorMock
+
 public class TabLinkNavigatorMock {
 
   public var value: Value = .init()
@@ -59,121 +61,123 @@ extension TabLinkNavigatorMock {
   }
 }
 
+// MARK: LinkNavigatorFindLocationUsable, TabLinkNavigatorProtocol
+
 extension TabLinkNavigatorMock: LinkNavigatorFindLocationUsable, TabLinkNavigatorProtocol {
   public func getCurrentPaths() -> [String] {
     event.getCurrentPaths += 1
     return value.currentPaths
   }
-  
+
   public func getCurrentRootPaths() -> [String] {
     event.getCurrentRootPaths += 1
     return value.currentRootPaths
   }
-  
-  public func next(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func next(linkItem _: LinkItem, isAnimated _: Bool) {
     event.next += 1
   }
-  
-  public func rootNext(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func rootNext(linkItem _: LinkItem, isAnimated _: Bool) {
     event.rootNext += 1
   }
-  
-  public func sheet(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func sheet(linkItem _: LinkItem, isAnimated _: Bool) {
     event.sheet += 1
   }
-  
-  public func fullSheet(linkItem: LinkItem, isAnimated: Bool, prefersLargeTitles: Bool?) {
+
+  public func fullSheet(linkItem _: LinkItem, isAnimated _: Bool, prefersLargeTitles _: Bool?) {
     event.fullSheet += 1
   }
-  
+
   public func customSheet(
-    linkItem: LinkItem,
-    isAnimated: Bool,
-    iPhonePresentationStyle: UIModalPresentationStyle,
-    iPadPresentationStyle: UIModalPresentationStyle,
-    prefersLargeTitles: Bool?)
+    linkItem _: LinkItem,
+    isAnimated _: Bool,
+    iPhonePresentationStyle _: UIModalPresentationStyle,
+    iPadPresentationStyle _: UIModalPresentationStyle,
+    prefersLargeTitles _: Bool?)
   {
     event.customSheet += 1
   }
-  
-  public func replace(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func replace(linkItem _: LinkItem, isAnimated _: Bool) {
     event.replace += 1
   }
-  
-  public func rootReplace(linkItem: LinkItem, isAnimated: Bool, closeAll: Bool) {
+
+  public func rootReplace(linkItem _: LinkItem, isAnimated _: Bool, closeAll _: Bool) {
     event.rootReplace += 1
   }
-  
-  public func backOrNext(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func backOrNext(linkItem _: LinkItem, isAnimated _: Bool) {
     event.backOrNext += 1
   }
-  
-  public func rootBackOrNext(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func rootBackOrNext(linkItem _: LinkItem, isAnimated _: Bool) {
     event.rootBackOrNext += 1
   }
-  
-  public func back(isAnimated: Bool) {
+
+  public func back(isAnimated _: Bool) {
     event.back += 1
   }
-  
-  public func remove(pathList: [String]) {
+
+  public func remove(pathList _: [String]) {
     event.remove += 1
   }
-  
-  public func rootRemove(pathList: [String]) {
+
+  public func rootRemove(pathList _: [String]) {
     event.rootRemove += 1
   }
-  
-  public func backToLast(path: String, isAnimated: Bool) {
+
+  public func backToLast(path _: String, isAnimated _: Bool) {
     event.backToLast += 1
   }
-  
-  public func rootBackToLast(path: String, isAnimated: Bool) {
+
+  public func rootBackToLast(path _: String, isAnimated _: Bool) {
     event.rootBackToLast += 1
   }
-  
-  public func close(isAnimated: Bool, completeAction: @escaping () -> Void) {
+
+  public func close(isAnimated _: Bool, completeAction _: @escaping () -> Void) {
     event.close += 1
   }
-  
-  public func range(path: String) -> [String] {
+
+  public func range(path _: String) -> [String] {
     event.range += 1
     return value.rangePaths
   }
-  
-  public func reloadLast(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func reloadLast(linkItem _: LinkItem, isAnimated _: Bool) {
     event.reloadLast += 1
   }
-  
-  public func rootReloadLast(linkItem: LinkItem, isAnimated: Bool) {
+
+  public func rootReloadLast(linkItem _: LinkItem, isAnimated _: Bool) {
     event.rootReloadLast += 1
   }
-  
-  public func alert(target: NavigationTarget, model: Alert) {
+
+  public func alert(target _: NavigationTarget, model _: Alert) {
     event.alert += 1
   }
-  
-  public func send(targetTabPath: String?, linkItem: LinkItem) {
+
+  public func send(targetTabPath _: String?, linkItem _: LinkItem) {
     event.send += 1
   }
-  
-  public func currentTabSend(linkItem: LinkItem) {
+
+  public func currentTabSend(linkItem _: LinkItem) {
     event.currentTabSend += 1
   }
-  
-  public func mainSend(linkItem: LinkItem) {
+
+  public func mainSend(linkItem _: LinkItem) {
     event.mainSend += 1
   }
-  
-  public func allSend(linkItem: LinkItem) {
+
+  public func allSend(linkItem _: LinkItem) {
     event.allSend += 1
   }
-  
-  public func currentTabAllSend(linkItem: LinkItem) {
+
+  public func currentTabAllSend(linkItem _: LinkItem) {
     event.currentTabAllSend += 1
   }
-  
-  public func moveTab(path: String) {
+
+  public func moveTab(path _: String) {
     event.moveTab += 1
   }
 

@@ -1,16 +1,16 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-let project: Project = .previewProject(
+let project = Project.preview(
   projectName: "Favorite",
   packages: [
-    .local(path: "../../Project/Core/Architecture"),
-    .local(path: "../../Project/Core/DesignSystem"),
-    .local(path: "../../Project/Core/Domain"),
-    .local(path: "../../Project/Core/Platform"),
-    .local(path: "../../Project/Core/Functor"),
-    .local(path: "../../Project/Feature/Dashboard"),
-  ] + .defaultItemList,
+    .local(path: .relativeToRoot("Modules/Core/Architecture")),
+    .local(path: .relativeToRoot("Modules/Core/DesignSystem")),
+    .local(path: .relativeToRoot("Modules/Core/Domain")),
+    .local(path: .relativeToRoot("Modules/Core/Platform")),
+    .local(path: .relativeToRoot("Modules/Core/Functor")),
+    .local(path: .relativeToRoot("Modules/Feature/Dashboard")),
+  ],
   dependencies: [
-    .package(product: "Dashboard"),
-  ] + .defaultItemList)
+    .package(product: "Dashboard", type: .runtime, condition: .none),
+  ])

@@ -1,7 +1,9 @@
-import Dashboard
 import ComposableArchitecture
+import Dashboard
 import Domain
 import XCTest
+
+// MARK: - RepoTests
 
 @MainActor
 public final class RepoTests: XCTestCase {
@@ -10,8 +12,12 @@ public final class RepoTests: XCTestCase {
   typealias Reducer = RepoReducer
 }
 
+// MARK: RepoTests.SUT
+
 extension RepoTests {
   struct SUT {
+
+    // MARK: Lifecycle
 
     init() {
       let container = AppContainerMock.build()
@@ -19,7 +25,7 @@ extension RepoTests {
       let navigator = container.navigator
       let scheduler = DispatchQueue.test
       store = .init(
-        initialState: State(), 
+        initialState: State(),
         reducer: {
           Reducer(sideEffect: .init(
             useCase: useCase,
@@ -31,6 +37,8 @@ extension RepoTests {
       self.navigator = navigator
       self.scheduler = scheduler
     }
+
+    // MARK: Internal
 
     let store: TestStore<State, Action>
     let useCase: DashboardEnvironmentUsable

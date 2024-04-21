@@ -1,19 +1,30 @@
-import Foundation
-
 import ProjectDescription
 
-extension DeploymentTarget {
-  public static let defaultTarget: DeploymentTarget = .iOS(targetVersion: "17.0", devices: [.iphone, .ipad])
+extension Settings {
+  public static var defaultConfig: (Bool) -> Settings {
+    { isDev in
+      .settings(
+        base: [
+          "CODE_SIGN_IDENTITY": "iPhone Developer",
+          "CODE_SIGN_STYLE": "Automatic",
+          "Mode": isDev ? "Development" : "Production",
+        ],
+        configurations: [],
+        defaultSettings: .recommended(excluding: .init()))
+    }
+  }
 }
 
-extension String {
-  public static let marketVersion = "MARKETING_VERSION"
-  public static let codeSignIdentity = "CODE_SIGN_IDENTITY"
-  public static let codeSigningStyle = "CODE_SIGNING_STYLE"
-  public static let codeSigningRequired = "CODE_SIGNING_REQUIRED"
-  public static let developmentTeam = "DEVELOPMENT_TEAM"
-  public static let provisioningProfileSpecifier = "PROVISIONING_PROFILE_SPECIFIER"
-  public static let swiftVersion = "SWIFT_VERSION"
-  public static let developmentAssetPaths = "DEVELOPMENT_ASSET_PATHS"
-  public static let enableTestability = "ENABLE_TESTABILITY"
+extension DeploymentTargets {
+  public static var `default`: Self {
+    .iOS("17.0")
+  }
+}
+
+extension InfoPlist {
+  public static var defaultInfoPlist: Self {
+    .extendingDefault(with: [
+      "UILaunchScreen": .dictionary([:]),
+    ])
+  }
 }

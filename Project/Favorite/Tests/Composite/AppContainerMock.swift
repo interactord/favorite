@@ -5,7 +5,7 @@ import Platform
 
 @testable import FavoritePreview
 
-// MARK: - AppContainer
+// MARK: - AppContainerMock
 
 final class AppContainerMock {
 

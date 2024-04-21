@@ -4,15 +4,25 @@ import Foundation
 
 // MARK: - GithubSearchUseCaseMock
 
-public final class GithubSearchUseCaseMock { 
+public final class GithubSearchUseCaseMock {
+
+  // MARK: Lifecycle
+
   public init() { }
+
+  // MARK: Public
 
   public var type: ResponseType = .success
   public var response: Response = .init()
 }
 
+// MARK: GithubSearchUseCase
+
 extension GithubSearchUseCaseMock: GithubSearchUseCase {
-  public var searchRepository: (GithubEntity.Search.Repository.Request) -> AnyPublisher<GithubEntity.Search.Repository.Response, CompositeErrorRepository> {
+  public var searchRepository: (GithubEntity.Search.Repository.Request) -> AnyPublisher<
+    GithubEntity.Search.Repository.Response,
+    CompositeErrorRepository
+  > {
     { [weak self] _ in
       guard let self else {
         return Fail(error: CompositeErrorRepository.invalidTypeCasting)
@@ -29,11 +39,13 @@ extension GithubSearchUseCaseMock: GithubSearchUseCase {
         return Fail(error: error)
           .eraseToAnyPublisher()
       }
-
     }
   }
 
-  public var searchUser: (GithubEntity.Search.User.Request) -> AnyPublisher<GithubEntity.Search.User.Response, CompositeErrorRepository> {
+  public var searchUser: (GithubEntity.Search.User.Request) -> AnyPublisher<
+    GithubEntity.Search.User.Response,
+    CompositeErrorRepository
+  > {
     { [weak self] _ in
       guard let self else {
         return Fail(error: CompositeErrorRepository.invalidTypeCasting)
@@ -65,20 +77,18 @@ extension GithubSearchUseCaseMock {
 
     var searchRepository = DataResponseMock<GithubEntity.Search.Repository.Response>(
       successValue:
-        URLSerializedMockFunctor
-          .serialized(url: Files.searchRepositoriesSuccessJson.url)!,
+      URLSerializedMockFunctor
+        .serialized(url: Files.searchRepositoriesSuccessJson.url)!,
       failureValue: CompositeErrorRepository.remoteError(
         URLSerializedMockFunctor
-          .serialized(url: Files.searchRepositoriesFailureJson.url)!
-      ))
+          .serialized(url: Files.searchRepositoriesFailureJson.url)!))
 
     var searchUser = DataResponseMock<GithubEntity.Search.User.Response>(
-      successValue: 
-        URLSerializedMockFunctor
-          .serialized(url: Files.searchUsersSuccessJson.url)!,
+      successValue:
+      URLSerializedMockFunctor
+        .serialized(url: Files.searchUsersSuccessJson.url)!,
       failureValue: CompositeErrorRepository.remoteError(
         URLSerializedMockFunctor
-          .serialized(url: Files.searchUsersFailureJson.url)!
-      ))
+          .serialized(url: Files.searchUsersFailureJson.url)!))
   }
 }

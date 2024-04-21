@@ -19,7 +19,7 @@ public struct RepoReducer {
     self.sideEffect = sideEffect
   }
 
-  // MARK: Internal
+  // MARK: Public
 
   @ObservableState
   public struct State: Equatable, Identifiable {
@@ -42,11 +42,6 @@ public struct RepoReducer {
     case fetchSearchItem(Result<GithubEntity.Search.Repository.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
-  }
-
-  enum CancelID: Equatable, CaseIterable {
-    case teardown
-    case requestSearch
   }
 
   public var body: some Reducer<State, Action> {
@@ -103,6 +98,13 @@ public struct RepoReducer {
           CancelID.allCases.map { .cancel(pageID: pageID, id: $0) })
       }
     }
+  }
+
+  // MARK: Internal
+
+  enum CancelID: Equatable, CaseIterable {
+    case teardown
+    case requestSearch
   }
 
   // MARK: Private
