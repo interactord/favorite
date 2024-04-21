@@ -39,6 +39,10 @@ public struct RepoReducer {
     case binding(BindingAction<State>)
     case search(String)
     case routeToDetail(GithubEntity.Search.Repository.Item)
+
+    /// - Note: In-Action
+    case sendSearchItem(GithubEntity.Search.Repository.Request)
+
     case fetchSearchItem(Result<GithubEntity.Search.Repository.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
@@ -63,13 +67,18 @@ public struct RepoReducer {
         }
 
         let page = Int(state.itemList.count / state.perPage) + 1
-        state.fetchSearchItem.isLoading = true
-        return sideEffect.search(.init(query: query, page: page, perPage: state.perPage))
-          .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
+        let sendItem = GithubEntity.Search.Repository.Request.init(query: query, page: page, perPage: state.perPage)
+        return .run { await $0(.sendSearchItem(sendItem))}
 
       case .routeToDetail(let item):
         sideEffect.routeToDetail(item)
         return .none
+
+      case .sendSearchItem(let item):
+        state.fetchSearchItem.isLoading = true
+        return sideEffect
+          .search(item)
+          .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
 
       case .fetchSearchItem(let result):
         state.fetchSearchItem.isLoading = false

@@ -1,48 +1,102 @@
 import ComposableArchitecture
-import Dashboard
 import Domain
+import Platform
+import Dashboard
 import XCTest
 
-// MARK: - RepoTests
+final class RepoTests: XCTestCase {
 
-@MainActor
-public final class RepoTests: XCTestCase {
-  typealias State = RepoReducer.State
-  typealias Action = RepoReducer.Action
-  typealias Reducer = RepoReducer
+  override func tearDown() {
+    super.tearDown()
+  }
+
+  @MainActor
+  func test_search_case1() async {
+
+    let newState: RepoReducer.State = {
+      let requestMock: GithubEntity.Search.Repository.Request = .init(query: "test", page: 1, perPage: 30)
+      let responseMock = GithubEntity.Search.Repository.Composite(
+        request: requestMock,
+        response: ResponseMock().searchResponse.searchRepository.successValue)
+
+      var newState = RepoReducer.State()
+      newState.itemList = responseMock.response.itemList
+      return newState
+    }()
+
+    let sut = SUT(state: newState)
+
+    await sut.store.send(.search("")) { state in
+      state.itemList = []
+    }
+  }
+
+  @MainActor
+  func test_sendSearchItem_success_case1() async {
+    let sut = SUT()
+
+    let requestMock: GithubEntity.Search.Repository.Request = .init(query: "test", page: 1, perPage: 30)
+    let responseMock = GithubEntity.Search.Repository.Composite(
+      request: requestMock,
+      response: ResponseMock().searchResponse.searchRepository.successValue)
+
+    await sut.store.send(.sendSearchItem(requestMock)) { state in
+      state.fetchSearchItem.isLoading = true
+    }
+
+    await sut.scheduler.advance()
+
+    await sut.store.receive(\.fetchSearchItem) { state in
+      state.fetchSearchItem.isLoading = false
+      state.fetchSearchItem.value = responseMock
+      state.itemList = responseMock.response.itemList
+    }
+  }
+
+  @MainActor
+  func test_sendSearchItem_failure_case1() async {
+    let sut = SUT()
+    sut.container.githubSearchUseCaseMock.type = .failure(.invalidTypeCasting)
+
+    let requestMock: GithubEntity.Search.Repository.Request = .init(query: "test", page: 1, perPage: 30)
+
+    await sut.store.send(.sendSearchItem(requestMock)) { state in
+      state.fetchSearchItem.isLoading = true
+    }
+
+    await sut.scheduler.advance()
+
+    await sut.store.receive(\.fetchSearchItem) { state in
+      state.fetchSearchItem.isLoading = false
+    }
+    await sut.store.receive(\.throwError)
+  }
+
 }
-
-// MARK: RepoTests.SUT
 
 extension RepoTests {
   struct SUT {
+    init(state: RepoReducer.State = .init()) {
+      let container = AppContainerMock.generate()
+      let main = DispatchQueue.test
 
-    // MARK: Lifecycle
-
-    init() {
-      let container = AppContainerMock.build()
-      let useCase = container.dependency
-      let navigator = container.navigator
-      let scheduler = DispatchQueue.test
-      store = .init(
-        initialState: State(),
-        reducer: {
-          Reducer(sideEffect: .init(
-            useCase: useCase,
-            main: scheduler.eraseToAnyScheduler(),
-            navigator: navigator))
-        })
-
-      self.useCase = useCase
-      self.navigator = navigator
-      self.scheduler = scheduler
+      self.store = .init(initialState: state) {
+        RepoReducer(sideEffect: .init(
+          useCase: container,
+          main: main.eraseToAnyScheduler(),
+          navigator: container.linkNavigator))
+      }
+      self.container = container
+      self.scheduler = main
     }
 
-    // MARK: Internal
-
-    let store: TestStore<State, Action>
-    let useCase: DashboardEnvironmentUsable
-    let navigator: TabLinkNavigatorMock
+    let container: AppContainerMock
     let scheduler: TestSchedulerOf<DispatchQueue>
+    let store: TestStore<RepoReducer.State, RepoReducer.Action>
+  }
+
+  struct ResponseMock {
+    let searchResponse: GithubSearchUseCaseMock.Response = .init()
+    init() {}
   }
 }

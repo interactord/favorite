@@ -2,36 +2,44 @@ import Architecture
 import Foundation
 import LinkNavigator
 import Platform
-
-@testable import FavoritePreview
+import Domain
+import Dashboard
 
 // MARK: - AppContainerMock
 
-final class AppContainerMock {
+final class AppContainerMock: DashboardEnvironmentUsable {
+  let toastViewModel: ToastViewModel
+  let githubSearchUseCaseMock: GithubSearchUseCaseMock
+  let githubDetailUseCase: GithubDetailUseCase
+  let githubLikeUseCase: GithubLikeUseCase
+  let linkNavigator: RootNavigatorType
 
-  // MARK: Lifecycle
-
-  private init(dependency: AppSideEffect, navigator: TabLinkNavigatorMock) {
-    self.dependency = dependency
-    self.navigator = navigator
+  var githubSearchUseCase: GithubSearchUseCase {
+    githubSearchUseCaseMock
   }
 
-  // MARK: Internal
-
-  let dependency: AppSideEffect
-  let navigator: TabLinkNavigatorMock
+  private init(
+    toastViewModel: ToastViewModel,
+    githubSearchUseCaseMock: GithubSearchUseCaseMock,
+    githubDetailUseCase: GithubDetailUseCase,
+    githubLikeUseCase: GithubLikeUseCase,
+    linkNavigator: RootNavigatorType)
+  {
+    self.toastViewModel = toastViewModel
+    self.githubSearchUseCaseMock = githubSearchUseCaseMock
+    self.githubDetailUseCase = githubDetailUseCase
+    self.githubLikeUseCase = githubLikeUseCase
+    self.linkNavigator = linkNavigator
+  }
 }
 
 extension AppContainerMock {
-  class func build() -> AppContainerMock {
-    let sideEffect = AppSideEffect(
+  class func generate() -> AppContainerMock {
+     .init(
       toastViewModel: .init(),
-      githubSearchUseCase: GithubSearchUseCaseMock(),
+      githubSearchUseCaseMock: .init(),
       githubDetailUseCase: GithubDetailUseCasePlatform(),
-      githubLikeUseCase: GithubLikeUseCasePlatform())
-
-    return .init(
-      dependency: sideEffect,
-      navigator: TabLinkNavigatorMock())
+      githubLikeUseCase: GithubLikeUseCasePlatform(),
+      linkNavigator: TabLinkNavigatorMock())
   }
 }

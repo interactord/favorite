@@ -75,7 +75,7 @@ extension GithubSearchUseCaseMock {
   public struct Response: Equatable, Sendable {
     public init() { }
 
-    var searchRepository = DataResponseMock<GithubEntity.Search.Repository.Response>(
+    public var searchRepository = DataResponseMock<GithubEntity.Search.Repository.Response>(
       successValue:
       URLSerializedMockFunctor
         .serialized(url: Files.searchRepositoriesSuccessJson.url)!,
@@ -83,7 +83,7 @@ extension GithubSearchUseCaseMock {
         URLSerializedMockFunctor
           .serialized(url: Files.searchRepositoriesFailureJson.url)!))
 
-    var searchUser = DataResponseMock<GithubEntity.Search.User.Response>(
+    public var searchUser = DataResponseMock<GithubEntity.Search.User.Response>(
       successValue:
       URLSerializedMockFunctor
         .serialized(url: Files.searchUsersSuccessJson.url)!,
