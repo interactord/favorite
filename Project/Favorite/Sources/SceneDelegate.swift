@@ -20,10 +20,12 @@ final class SceneDelegate: NSObject, UIWindowSceneDelegate {
     /// - Note: 에어플레이 또는 USB 연결시, 화면이 분리되는 현상 제거. (Screen Mirroring)
     guard session.role != .windowExternalDisplayNonInteractive else { return }
 
-    toastWindow = root.buildForToastView(toastViewModel: appDelegate.dependency.toastViewModel)
+    guard let toastViewModel = appDelegate.dependency.toastViewModel as? ToastViewModel else { return }
+
+    toastWindow = root.buildForToastView(toastViewModel: toastViewModel)
     keyWindow = root.buildForKeyWindow(linkNavigator: appDelegate.navigator)
 
-    appDelegate.dependency.toastViewModel.changeAction = { [weak self] isToastKeyWindow in
+    toastViewModel.changeAction = { [weak self] isToastKeyWindow in
       self?.toastWindow?.isHidden = !isToastKeyWindow
     }
   }

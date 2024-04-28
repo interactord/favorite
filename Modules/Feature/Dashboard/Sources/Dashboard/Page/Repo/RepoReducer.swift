@@ -67,7 +67,6 @@ public struct RepoReducer {
         guard !query.isEmpty else { return .none }
         let page = Int(state.itemList.count / state.perPage) + 1
         state.fetchSearchItem.isLoading = true
-//        state.fetchSearchItem.value = .none
 
         return sideEffect
           .search(.init(query: query, page: page, perPage: state.perPage))

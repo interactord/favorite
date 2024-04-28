@@ -31,7 +31,7 @@ public final class ToastViewModel {
 
 }
 
-extension ToastViewModel {
+extension ToastViewModel: ToastViewActionType {
   public func send(message: String) {
     DispatchQueue.main.async { [weak self] in
       guard let self else { return }

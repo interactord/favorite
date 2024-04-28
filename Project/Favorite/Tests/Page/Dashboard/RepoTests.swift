@@ -142,6 +142,8 @@ final class RepoTests: XCTestCase {
       state.fetchSearchItem.value = mock
     }
 
+    XCTAssertEqual(sut.container.toastViewActionMock.event.sendMessage, 1)
+
   }
 
   @MainActor
