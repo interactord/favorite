@@ -30,6 +30,11 @@ extension GithubEntity.Search.Repository {
     public let totalCount: Int
     public let itemList: [Item]
 
+    public init(totalCount: Int, itemList: [Item]) {
+      self.totalCount = totalCount
+      self.itemList = itemList
+    }
+
     private enum CodingKeys: String, CodingKey {
       case totalCount = "total_count"
       case itemList = "items"

@@ -26,7 +26,7 @@ public struct RepoReducer {
     public let id: UUID
     public let perPage = 40
 
-    public var query = "swift"
+    public var query = ""
     public var itemList: [GithubEntity.Search.Repository.Item] = []
     public var fetchSearchItem: FetchState.Data<GithubEntity.Search.Repository.Composite?> = .init(isLoading: false, value: .none)
 
@@ -40,9 +40,6 @@ public struct RepoReducer {
     case search(String)
     case routeToDetail(GithubEntity.Search.Repository.Item)
 
-    /// - Note: In-Action
-    case sendSearchItem(GithubEntity.Search.Repository.Request)
-
     case fetchSearchItem(Result<GithubEntity.Search.Repository.Composite, CompositeErrorRepository>)
     case throwError(CompositeErrorRepository)
     case teardown
@@ -52,40 +49,37 @@ public struct RepoReducer {
     BindingReducer()
     Reduce { state, action in
       switch action {
+      case .binding(\.query):
+        guard !state.query.isEmpty else {
+          state.itemList = []
+          return .cancel(pageID: pageID, id: CancelID.requestSearch)
+        }
+
+        if state.query != state.fetchSearchItem.value?.request.query {
+          state.itemList = []
+        }
+        return .none
+
       case .binding:
         return .none
 
       case .search(let query):
-        guard !query.isEmpty else {
-          state.itemList = []
-          return .none
-        }
-
-        if state.query != state.fetchSearchItem.value?.request.query { state.itemList = [] }
-        if let totalCount = state.fetchSearchItem.value?.response.totalCount, totalCount < state.itemList.count {
-          return .none
-        }
-
+        guard !query.isEmpty else { return .none }
         let page = Int(state.itemList.count / state.perPage) + 1
-        let sendItem = GithubEntity.Search.Repository.Request.init(query: query, page: page, perPage: state.perPage)
-        return .run { await $0(.sendSearchItem(sendItem))}
+        state.fetchSearchItem.isLoading = true
+//        state.fetchSearchItem.value = .none
+
+        return sideEffect
+          .search(.init(query: query, page: page, perPage: state.perPage))
+          .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
 
       case .routeToDetail(let item):
         sideEffect.routeToDetail(item)
         return .none
 
-      case .sendSearchItem(let item):
-        state.fetchSearchItem.isLoading = true
-        return sideEffect
-          .search(item)
-          .cancellable(pageID: pageID, id: CancelID.requestSearch, cancelInFlight: true)
-
       case .fetchSearchItem(let result):
         state.fetchSearchItem.isLoading = false
-        guard !state.query.isEmpty else {
-          state.itemList = []
-          return .none
-        }
+
         switch result {
         case .success(let item):
           state.fetchSearchItem.value = item
